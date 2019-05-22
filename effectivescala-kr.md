@@ -14,24 +14,9 @@
 <a href="index-cn.html">简体中文</a>
 
 
-## Introduction
+## 개요
 
-[Scala][Scala] is one of the main application programming languages
-used at Twitter. Much of our infrastructure is written in Scala and
-[we have several large libraries](https://github.com/twitter/)
-supporting our use. While highly effective, Scala is also a large language,
-and our experiences have taught us to practice great care in its
-application. What are its pitfalls? Which features do we embrace,
-which do we eschew? When do we employ "purely functional style", and when
-do we avoid it? In other words: what have we found to be an effective
-use of the language?  This guide attempts to distill our experience into short
-essays, providing a set of *best practices*. Our use of Scala is mainly for
-creating high volume services that form distributed systems -- and our
-advice is thus biased -- but most of the advice herein should translate
-naturally to other domains. This is not the law, but deviation should
-be well justified.
-
-[스칼라][Scala] 는 Twitter에서 주로 활용하는 응용프로그래밍 언어 중 하나로써, 
+[Scala] 는 Twitter에서 주로 활용하는 응용프로그래밍 언어 중 하나로써, 
 많은 내부 시스템이 스칼라로 작성되어 있고, 이를 위한 많은 [스칼라_라이브러리](https://github.com/twitter/)를 관리/제공하고 있습니다.
 스칼라는 아주 효율적이고 방대한 언어로서, 경험적으로 많은 주의와 연습이 필요함을 배웠습니다.
 언어의 함정은 무엇인지? 어떤 특징을 갖고 있는지? 어떤 부분이 꺼려지는지? 
@@ -41,18 +26,14 @@ be well justified.
 우리는 스칼라를 분산환경의 방대한 서비스에 주로 활용하고 있기 때문에, 각자의 도메인에 맞는 해석이 필요할 수 있으며, 
 이에 따른 내용의 편차 또한 존재할 수 있습니다.
 
+스칼라는 간결한 표현을 가능케 하는 여러 방법을 제공합니다. 타이핑을 적게할수록 읽는 수고도 적으며,
+적게 읽을수록 빠르게 읽히고, 간결할수록 명료함을 높이게됩니다.
+하지만, 간결함은 정반대의 효과를 가져올 수 있기 떄문에, 정확하게 작성하고 항상 읽는사람을 생각해야 합니다.
 
-Scala provides many tools that enable succinct expression. Less typing
-is less reading, and less reading is often faster reading, and thus
-brevity enhances clarity. However brevity is a blunt tool that can
-also deliver the opposite effect: After correctness, think always of
-the reader.
+위의 모든 설명은 *Scala 프로그램*에 대한 내용입니다. Scala는 Java, Haskell 호은 Python과 같은 언어가 아닙니다.
+효율적인 언어의 사용을 위해서, 해결하려는 문제를 그 언어의 표현으로 잘 표현해야 합니다.
+Java프로그램을 Scala로 사용하는것은 의미없는 행동이며, 모든면에서 원본 프로그램보다 안좋을 것 입니다.
 
-Above all, *program in Scala*. You are not writing Java, nor Haskell,
-nor Python; a Scala program is unlike one written in any of these. In
-order to use the language effectively, you must phrase your problems
-in its terms. There's no use coercing a Java program into Scala, for
-it will be inferior in most ways to its original.
 
 This is not an introduction to Scala; we assume the reader
 is familiar with the language. Some resources for learning Scala are:
@@ -76,29 +57,10 @@ And have fun.
 
 ## Formatting
 
-The specifics of code *formatting* -- so long as they are practical --
-are of little consequence. By definition style cannot be inherently
-good or bad and almost everybody differs in personal
-preference. However the *consistent* application of the same 
-formatting rules will almost always enhance
-readability. A reader already familiar with a particular style does
-not have to grasp yet another set of local conventions, or decipher
-yet another corner of the language grammar.
-
 코드 *형식*의 세세한 내용들은 그리 중요하지 않을 수 있습니다.
 개인의 취향과 개성에 따라 코드는 달라지며, 특정 코드스타일을 좋다 혹은 나쁘다라고 정의할 수 없습니다.
 하지만 *일관성있는* 규칙으로 작성된 어플리케이션은, 일반적으로 가독성이 높습니다.
-특정 스타일에 이미 익숙해진 독자는 다른 로컬 컨벤션 같이 각각 구현된 코드에 익숙해지거나 완전히 다른 문법을 해독할 필요도 없습니다.
-
-
-This is of particular importance to Scala, as its grammar has a high
-degree of overlap. One telling example is method invocation: Methods
-can be invoked with "`.`", with whitespace, without parenthesis for
-nullary or unary methods, with parenthesis for these, and so on.
-Furthermore, the different styles of method invocations expose
-different ambiguities in its grammar! Surely the consistent
-application of a carefully chosen set of formatting rules will resolve
-a great deal of ambiguity for both man and machine.
+특정 스타일에 이미 익숙해진 독자는 다른 로컬 컨벤션 같이 각각 구현된 코드에 익숙해지거나 완전히 다른 문법을 해독할 필요도 없습니다
 
 문법의 높은 공통성은 스칼라의 가장 중요한 점 입니다.
 함수 호출을 예로 들어보자면: `.`과 함께 함수가 호출할 수 있으며, 공백과 함께 호출할 수도 있고, 
